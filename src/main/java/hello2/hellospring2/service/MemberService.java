@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Optional;
 //비즈니스 로직-->같은 이름이 있는 회원은 안된다라고 가정.
 
-@Service
+//@Service
 public class MemberService { // ctrl + shift + t 하면 test 생성
 
     /* private final MemberRepository memberRepository=new MemoryMemberRepository();
@@ -21,7 +21,7 @@ public class MemberService { // ctrl + shift + t 하면 test 생성
     */
     private final MemberRepository memberRepository;
 
-    @Autowired
+    //@Autowired
     public MemberService(MemberRepository memberRepository) {
         this.memberRepository = memberRepository;
         //외부에서 memberReporitory에 직접 넣어주는걸로 바꾸기. DB의 통일성을 위해서
