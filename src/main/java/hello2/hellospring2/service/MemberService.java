@@ -4,12 +4,14 @@ import hello2.hellospring2.domain.Member;
 import hello2.hellospring2.repository.MemberRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
 //비즈니스 로직-->같은 이름이 있는 회원은 안된다라고 가정.
 
 //@Service
+@Transactional
 public class MemberService { // ctrl + shift + t 하면 test 생성
 
     /* private final MemberRepository memberRepository=new MemoryMemberRepository();
@@ -29,6 +31,9 @@ public class MemberService { // ctrl + shift + t 하면 test 생성
 
     /*회원 가입*/
     public Long join(Member member){
+
+        long start=System.currentTimeMillis();
+
         //같은 이름이 있는 중복 회원X
         /*Optional<Member> result = memberRepository.findByName(member.getName()); //Ctrl+Alt+V
         result.ifPresent(m->{
@@ -41,14 +46,16 @@ public class MemberService { // ctrl + shift + t 하면 test 생성
         그래서 요즘은 null이 있을 가능성이 있는 변수의 경우 Optional로 감싸고 그에 따른 다양한 메소드를 쓸 수 있음.
 
          */
-        validateDuplicateMember(member); //1. 중복 회원 검증.
+
+            validateDuplicateMember(member); //1. 중복 회원 검증.
         /*위의 코드를 간단히 쓰면 아래 validateDuplicateMember 처럼 쓸 수 있다.
           findByName하고 로직이 쭉 길게 나올경우 위의 한줄 같이 메소드로 따로 빼는것이 가독성이 좋음.
           메소드는 아래에 나옴.
           Refactoring 단축키: Ctrl+Alt+M 두번눌러서 이름변경
         * */
-        memberRepository.save(member); //2. 중복 회원 검증이 되면 해당 멤버 저장
-        return member.getId(); //회원가입을 하면 아이디만 반환.
+            memberRepository.save(member); //2. 중복 회원 검증이 되면 해당 멤버 저장
+            return member.getId(); //회원가입을 하면 아이디만 반환.
+
     }
 
     private void validateDuplicateMember(Member member) {
